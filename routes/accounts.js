@@ -70,7 +70,7 @@ router.post("/token",
     })
 
 router.post("/token/refresh",
-    (req, res) => {
+    async (req, res) => {
         /**
         @body {
             refresh: ""
@@ -86,7 +86,8 @@ router.post("/token/refresh",
                 details: "Missing refresh token"
             });
         } else {
-            const payload = Token.verify(refresh, "refresh");
+            const user = await Token.verify(refresh, "refresh");
+            const payload = GenerateUserPayload(user);
             if (payload !== null) {
                 const tokenGenerator = new Token(payload);
                 return res.json({
