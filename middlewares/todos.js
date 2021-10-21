@@ -6,16 +6,16 @@ const UserOwnsTodo = async (req, res, next) => {
     const user = req.user;
     const todo = await Todo.findByPk(todoId);
     if(todo === null) {
-        res.status(HTTP_NOT_FOUND).json({
+        return res.status(HTTP_NOT_FOUND).json({
             "details": "Todo does not exist"
         });
     }
     if (todo.userId !== user.id) {
-        res.status(HTTP_UNAUTHORIZED).json({
+        return res.status(HTTP_UNAUTHORIZED).json({
             "details": "Not authorized to delete todo"
         });
     } else {
-        next();
+        return next();
     }
 }
 
