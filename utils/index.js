@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { accessTokenLifeTime, refreshTokenLifeTime } = require("../config");
 const keys = require("../config");
+const { User } = require("../models");
 
 const RenderErrors = (errors) => {
     try {
@@ -45,8 +46,10 @@ class Token {
         let payload = null;
         jwt.verify(token, keys.secretKey, (err, decoded) => {
             if (err) return;
+            // console.log("Decoded: ", decoded);
             if (decoded.type === type) {
-                payload = GenerateUserPayload(decoded);
+                // payload = GenerateUserPayload(decoded);
+                payload = User.findByPk(decoded.id);
             }
         });
         return payload;

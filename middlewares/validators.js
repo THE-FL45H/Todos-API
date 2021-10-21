@@ -1,4 +1,4 @@
-const { body, validationResult } = require("express-validator");
+const { body } = require("express-validator");
 
 const registerRouteValidators = [
     body("username").exists().notEmpty(),
@@ -13,7 +13,13 @@ const tokenRouteValidators = [
     body("password").exists()
 ];
 
+const todoCreateRouteValidators = [
+    body("title").exists().notEmpty(),
+    body("completed").default(false)
+]
+
 module.exports = {
     registerRouteValidators,
-    tokenRouteValidators
+    tokenRouteValidators,
+    todoCreateRouteValidators
 }

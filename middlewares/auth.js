@@ -18,7 +18,7 @@ const UserExists = async (req, res, next) => {
 
 const VerifyToken = async (req, res, next) => {
     const accessToken = GetTokenFromString(req.headers.authorization);
-    const user = Token.verify(accessToken, type = "access");
+    const user = await Token.verify(accessToken, type = "access");
     if (user === null) {
         res.status(HTTP_UNAUTHORIZED).json({
             details: "Unauthorized"
